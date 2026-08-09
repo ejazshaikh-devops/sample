@@ -9,7 +9,7 @@ FROM node:20-alpine
 RUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001
 WORKDIR /app
 COPY --from=builder --chown=nodejs:nodejs /app/node_modules ./node_modules
-COPY --chown=nodejs:nodejs . .
+COPY --chown=nodejs:nodejs services/user-service/. ./
 COPY --chown=nodejs:nodejs services/shared ./shared
 USER nodejs
 EXPOSE 3000
