@@ -1,7 +1,7 @@
 # Stage 1: Install deps
 FROM node:20-alpine AS builder
 WORKDIR /app
-COPY package*.json ./
+COPY services/user-service/package*.json ./
 RUN npm ci --only=production && npm cache clean --force
 
 # Stage 2: Runtime (minimal image)
