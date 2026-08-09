@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: YOUR_DOCKERHUB_USERNAME/user-service:latest
+          image: theenigmawolf/user-service:13
           ports:
             - containerPort: 3004
           envFrom:
@@ -74,7 +74,7 @@ spec:
     spec:
       containers:
         - name: frontend-service
-          image: YOUR_DOCKERHUB_USERNAME/frontend-service:latest
+          image: theenigmawolf/frontend-service:13
           ports:
             - containerPort: 80
           resources:
