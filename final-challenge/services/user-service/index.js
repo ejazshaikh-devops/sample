@@ -5,7 +5,7 @@ const helmet   = require('helmet');
 const morgan   = require('morgan');
 const bcrypt   = require('bcryptjs');
 const jwt      = require('jsonwebtoken');
-const db       = require('../shared/db');
+const db       = require('./shared/db');
 
 const app    = express();
 const PORT   = process.env.PORT || 3004;
