@@ -2,21 +2,21 @@ pipeline {
     agent any
 
     tools {
-        jdk 'jdk17'
-        nodejs 'node16'
+        jdk 'jdk'
+        nodejs 'Node'
     }
 
     environment {
-        SCANNER_HOME          = tool 'sonar-scanner'
-        DOCKER_REGISTRY       = 'YOUR_DOCKERHUB_USERNAME'
-        DOCKER_CREDENTIALS_ID = 'docker-cred'
+        SCANNER_HOME          = tool 'sonar'
+        DOCKER_REGISTRY       = 'theenigmawolf'
+        DOCKER_CREDENTIALS_ID = 'docker'
         BACKEND_IMAGE         = 'user-service'
         FRONTEND_IMAGE        = 'frontend-service'
-        MANIFEST_FILE         = 'k8s/03-deployments.yaml'
-        GIT_REPO_NAME         = 'abhi-ejaz-shop'
-        GIT_USER_NAME         = 'YOUR_GITHUB_USERNAME'
-        GIT_EMAIL             = 'YOUR_GITHUB_EMAIL'
-        GIT_CREDENTIALS_ID    = 'git-cred'
+        MANIFEST_FILE         = 'final-challenge/k8s/03-deployments.yaml'
+        GIT_REPO_NAME         = 'sample'
+        GIT_USER_NAME         = 'ejazshaikh-devops'
+        GIT_EMAIL             = 'ejazs720@gmail.com'
+        GIT_CREDENTIALS_ID    = 'github'
     }
 
     stages {
@@ -29,13 +29,13 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: "https://github.com/${env.GIT_USER_NAME}/${env.GIT_REPO_NAME}.git"
+                git branch: 'main', url: "https://github.com/ejazshaikh-devops/sample.git"
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonar-server') {
+                withSonarQubeEnv('sonar') {
                     sh """
                         ${SCANNER_HOME}/bin/sonar-scanner \
                         -Dsonar.projectName=AbhiEjazShop \
@@ -55,7 +55,7 @@ pipeline {
         // building — same requirement as RUNBOOK.md Step 2.
         stage('Prep Frontend Config') {
             steps {
-                sh 'cp frontend-nginx/nginx.conf services/frontend/nginx.conf'
+                sh 'cp final-challenge/frontend-nginx/nginx.conf final-challenge/services/frontend/nginx.conf'
             }
         }
 
@@ -64,7 +64,7 @@ pipeline {
                 script {
                     def imageTag         = "${BACKEND_IMAGE}:${BUILD_NUMBER}"
                     def registryImageTag = "${DOCKER_REGISTRY}/${imageTag}"
-                    sh "docker build -f services/user-service/Dockerfile -t ${imageTag} ."
+                    sh "docker build -f final-challenge/services/user-service/Dockerfile -t ${imageTag} final-challenge"
                     withDockerRegistry(credentialsId: DOCKER_CREDENTIALS_ID, toolName: 'docker') {
                         sh """
                             docker tag ${imageTag} ${registryImageTag}
@@ -80,7 +80,7 @@ pipeline {
                 script {
                     def imageTag         = "${FRONTEND_IMAGE}:${BUILD_NUMBER}"
                     def registryImageTag = "${DOCKER_REGISTRY}/${imageTag}"
-                    sh "docker build -f services/frontend/Dockerfile -t ${imageTag} services/frontend"
+                    sh "docker build -f final-challenge/services/frontend/Dockerfile -t ${imageTag} final-challenge/services/frontend"
                     withDockerRegistry(credentialsId: DOCKER_CREDENTIALS_ID, toolName: 'docker') {
                         sh """
                             docker tag ${imageTag} ${registryImageTag}
