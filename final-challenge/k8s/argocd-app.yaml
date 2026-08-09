@@ -7,9 +7,9 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/YOUR_GITHUB_USERNAME/abhi-ejaz-shop.git
+    repoURL: https://github.com/ejazshaikh-devops/sample.git
     targetRevision: main
-    path: k8s
+    path: final-challenge/k8s
     directory:
       # Only sync the manifests Jenkins actually touches / that define the app.
       # argocd-app.yaml itself and terraform/ are excluded since they don't
