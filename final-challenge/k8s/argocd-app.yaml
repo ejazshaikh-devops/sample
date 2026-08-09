@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: abhi-ejaz-shop
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/YOUR_GITHUB_USERNAME/abhi-ejaz-shop.git
+    targetRevision: main
+    path: k8s
+    directory:
+      # Only sync the manifests Jenkins actually touches / that define the app.
+      # argocd-app.yaml itself and terraform/ are excluded since they don't
+      # belong in this Application's sync scope.
+      exclude: 'argocd-app.yaml'
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: abhi-ejaz
+
+  syncPolicy:
+    automated:
+      prune: true       # remove resources deleted from git
+      selfHeal: true     # revert manual kubectl edits back to git state
+    syncOptions:
+      - CreateNamespace=false   # namespace is created by 00-namespace.yaml itself
