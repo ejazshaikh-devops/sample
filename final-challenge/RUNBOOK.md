@@ -131,4 +131,4 @@ terraform destroy   # type yes - removes EKS, RDS, VPC, NAT gateway, everything
 ```
 Also delete the ECR repos if `terraform destroy` doesn't (check `aws ecr describe-repositories`).
 NAT Gateway + RDS + EKS control plane all bill hourly even sitting idle - don't leave this
-running overnight by accident.
+running overnight by accident. sts
