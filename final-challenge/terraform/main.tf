@@ -11,11 +11,10 @@ terraform {
   # Remote state — create this S3 bucket ONCE manually before terraform init
   # aws s3 mb s3://abhi-ejaz-terraform-state --region eu-north-1
   backend "s3" {
-    bucket         = "abhi-ejaz-terraform-state"
+    bucket         = "abhi-ejaz-terraform-state-v2"
     key            = "prod/terraform.tfstate"
     region         = "eu-north-1"
     encrypt        = true
-    dynamodb_table = "abhi-ejaz-tf-lock" # for state locking
   }
 }
 
