@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: theenigmawolf/user-service:51
+          image: theenigmawolf/user-service:52
           ports:
             - containerPort: 3004
           envFrom:
@@ -74,7 +74,7 @@ spec:
     spec:
       containers:
         - name: frontend-service
-          image: theenigmawolf/frontend-service:51
+          image: theenigmawolf/frontend-service:52
           ports:
             - containerPort: 80
           resources:
